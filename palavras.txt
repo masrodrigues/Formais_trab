@@ -1,0 +1,12 @@
+Aceita:
+n,v,ma,ma,se,et,sl,ma,se 
+n,v,sl,se,se,c 
+s,sl,ma,se,d,se,sa,re,vê
+n,v,sl,ma,sl,se,et
+s,ma,se,r,se
+
+Rejeita:
+n,ma,sl,se,se,c 
+n,sa,re,v,ma,ma
+s,se,se,c,et,sa,re 
+n,v,sl,ma,sl,se,s 
