@@ -148,40 +148,46 @@ print("Prog")
 for m in G_AFD.estados():
     print (m, ": ", G_AFD.transicoes(m))
     
+
+## Função para ler as sequências de símbolos do arquivo de teste
+def ler_sequencias_teste(nome_arquivo):
+    with open(nome_arquivo, "r") as arquivo:
+        sequencias = arquivo.readlines()
+    return [seq.strip().split(',') for seq in sequencias]
 print ('\n')
 cont = 's'
 while(cont == 's' or cont == 'S'):
-    a = input("Digite a palavra : ")
-    a = a.split(",")#entrada da palavra separada por virgula
+    # Função para ler as palavras do arquivo de teste
 
-    invalido=False
-    estadoAtual = estadoI
-    resp = True
 
-    for i in a:
-    
-        proximo_estado = False
+# Solicitar ao usuário para digitar o nome do arquivo de teste
+    nome_arquivo_teste = input("Digite o nome do arquivo de teste: ")
+    sequencias_teste = ler_sequencias_teste(nome_arquivo_teste)
 
-        t = G_AFD.transicoes(estadoAtual)
-        for j in G_AFD.transicoes(estadoAtual):
-            print(i,'//',j[0])#percorrendo os simbolos  
-            if i == j[0]:
-                proximo_estado = True
-                estadoAtual = j[1]
-        if proximo_estado == False:
-            resp = False
-            invalido=True
-            break
-        
+# Testar cada sequência de símbolos do arquivo de teste
+    for sequencia in sequencias_teste:
+        estadoAtual = estadoI
+        resp = True
+        invalido = False
 
-    for e in novos_estados_finais:
-        if e == estadoAtual:
-            resp = True 
+        for simbolo in sequencia:
+            proximo_estado = False
+            for transicao in G_AFD.transicoes(estadoAtual):
+                if simbolo == transicao[0]:
+                    proximo_estado = True
+                    estadoAtual = transicao[1]
+                    break
+            if not proximo_estado:
+                resp = False
+                invalido = True
+                break
 
-    if resp == False or invalido:
-         print("Rejeita")
+        if estadoAtual in novos_estados_finais and not invalido:
+            print(f"Sequência '{', '.join(sequencia)}': Aceita")
+        else:
+            print(f"Sequência '{', '.join(sequencia)}': Rejeita")
+        print("\n")
 
-    else:
-             print("Aceita")
+
     cont = input("\nDeseja inserir uma nova palavra(S/N): ")
     print("\n")
